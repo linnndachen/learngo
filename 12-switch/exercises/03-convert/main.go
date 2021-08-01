@@ -38,16 +38,27 @@ func main() {
 
 	u, p := args[1], args[2]
 
+	switch {
+	case u != user && u != user2:
+		fmt.Printf(errUser, u)
+	case u == user && p == pass:
+		fallthrough
+	case u == user2 && p == pass2:
+		fmt.Printf(accessOK, u)
+	default:
+		fmt.Printf(errPwd, u)
+	}
+
 	//
 	// REFACTOR THIS TO A SWITCH
 	//
-	if u != user && u != user2 {
-		fmt.Printf(errUser, u)
-	} else if u == user && p == pass {
-		fmt.Printf(accessOK, u)
-	} else if u == user2 && p == pass2 {
-		fmt.Printf(accessOK, u)
-	} else {
-		fmt.Printf(errPwd, u)
-	}
+	// if u != user && u != user2 {
+	// 	fmt.Printf(errUser, u)
+	// } else if u == user && p == pass {
+	// 	fmt.Printf(accessOK, u)
+	// } else if u == user2 && p == pass2 {
+	// 	fmt.Printf(accessOK, u)
+	// } else {
+	// 	fmt.Printf(errPwd, u)
+	// }
 }
