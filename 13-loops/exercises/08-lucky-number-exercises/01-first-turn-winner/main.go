@@ -8,6 +8,14 @@
 
 package main
 
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"strconv"
+	"time"
+)
+
 // ---------------------------------------------------------
 // EXERCISE: First Turn Winner
 //
@@ -25,5 +33,48 @@ package main
 //  3. Terminate the game and print the bonus message
 // ---------------------------------------------------------
 
+const (
+	maxTurns = 5 // less is more difficult
+	usage    = `Welcome to the Lucky Number Game! 🍀
+
+The program will pick %d random numbers.
+Your mission is to guess one of those numbers.
+
+The greater your number is, harder it gets.
+
+Wanna play?
+`
+)
+
 func main() {
+	if len(os.Args) != 2 {
+		fmt.Printf(usage, maxTurns)
+		return
+	}
+
+	guess, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		fmt.Println("Not a number")
+		return
+	}
+
+	if guess <= 0 {
+		fmt.Println("Please enter a positive number")
+		return
+	}
+
+	rand.Seed(time.Now().UnixNano())
+
+	for turn := 1; turn <= maxTurns; turn++ {
+		pick := rand.Intn(guess) + 1
+
+		if pick == guess {
+			if turn == 1 {
+				fmt.Println("🥇 FIRST TIME WINNER!!!")
+			} else {
+				fmt.Println("🎉  YOU WON!")
+			}
+			return
+		}
+	}
 }
